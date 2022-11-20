@@ -16,11 +16,28 @@ class MainGame:
         pygame.display.set_caption('Tank War')
         while True:
             self.window.fill(BG_COLOR)
+            self.getEvent()
             pygame.display.update()
 
 
     def end_game(self):
-        pass
+        print('Thanks')
+        exit()
+
+    def getEvent(self):
+        eventList = pygame.event.get()
+        for event in eventList:
+            if event.type == pygame.QUIT:
+                self.end_game()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    pass
+                elif event.key == pygame.K_RIGHT:
+                    pass
+                elif event.key == pygame.K_UP:
+                    pass
+                elif event.key == pygame.K_DOWN:
+                    pass
 
 
 if __name__=='__main__':
