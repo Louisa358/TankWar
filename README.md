@@ -1,19 +1,5 @@
 # TankWar
 
-[!ROC]
-
-游戏功能查询：www.pygame.org
-
-import pygame
-
-常用功能：
-
-1.主窗口显示：pygame.display (set_mode设置screen，fill填充颜色)
-
-
-
-
-
 #### 一、初始化类
 
 <img src="./assets/image-20221119141713624.png" alt="image-20221119141713624" style="zoom:50%;" />
@@ -53,3 +39,24 @@ import pygame
 
 
 #### 二.加载主窗口
+
+游戏功能查询：www.pygame.org
+
+import pygame
+
+常用功能：
+
+1.主窗口显示：pygame.display (set_mode设置screen，fill填充颜色)
+
+
+
+#### 三.事件处理
+
+任务：关闭窗口及实现键盘对游戏的操控
+
+2.获取事件： pygame.event.get()
+
+3.按下按键：event.type == pygame.KEYDOWN
+
+4.关闭游戏：event.type == pygame.QUIT
+
