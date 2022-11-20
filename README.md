@@ -1,8 +1,22 @@
 # TankWar
 
-1、初始化类
+[!ROC]
 
-![image-20221119141713624](./assets/image-20221119141713624.png)
+游戏功能查询：www.pygame.org
+
+import pygame
+
+常用功能：
+
+1.主窗口显示：pygame.display (set_mode设置screen，fill填充颜色)
+
+
+
+
+
+#### 一、初始化类
+
+<img src="./assets/image-20221119141713624.png" alt="image-20221119141713624" style="zoom:50%;" />
 
 ###### 坦克类：敌我坦克
 
@@ -35,3 +49,7 @@
 1、开始游戏
 
 2、结束游戏
+
+
+
+#### 二.加载主窗口
