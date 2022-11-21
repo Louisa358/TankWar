@@ -3,6 +3,7 @@ import pygame
 SCREEN_WIDTH = 700
 SCREEN_HEIGHT = 500
 BG_COLOR = pygame.Color(0,0,0)
+TEXT_COLOR = pygame.Color(255,0,0)
 
 class MainGame:
     window = None
@@ -17,12 +18,20 @@ class MainGame:
         while True:
             self.window.fill(BG_COLOR)
             self.getEvent()
+            self.window.blit(self.getTextSurface('Enemy Tank left: %d' %6),(10,10))
             pygame.display.update()
+
 
 
     def end_game(self):
         print('Thanks')
         exit()
+
+    def getTextSurface(self,text):
+        pygame.font.init()
+        font = pygame.font.SysFont('gadugi',18)
+        textSurface = font.render(text,True,TEXT_COLOR)
+        return textSurface
 
     def getEvent(self):
         eventList = pygame.event.get()
