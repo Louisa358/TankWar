@@ -27,10 +27,11 @@ class Tank:
             if self.rect.top > 0:
                 self.rect.top -= self.speed
         elif self.direction == 'R':
-            if self.rect.
+            if self.rect.left + self.rect.height<self.windows.get_width():
                 self.rect.left += self.speed
         elif self.direction == 'D':
-            self.rect.top += self.speed
+            if self.rect.top + self.rect.height < self.windows.get_height():
+                self.rect.top += self.speed
 
     def shoot(self):
         pass
