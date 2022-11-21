@@ -42,6 +42,8 @@
 
 #### 二.加载主窗口
 
+（代码：def start_game）
+
 游戏功能查询：www.pygame.org
 
 import pygame
@@ -50,9 +52,9 @@ import pygame
 
 1.主窗口显示：pygame.display (set_mode设置screen，fill填充颜色)
 
-（代码操作：def start_game）
-
 #### 三.事件处理
+
+（代码：def getEvent)
 
 任务：关闭窗口及实现键盘对游戏的操控
 
@@ -62,12 +64,22 @@ import pygame
 
 4.关闭游戏：event.type == pygame.QUIT
 
-（代码操作：def getEvent)
-
 #### 四.界面内文字提示
 
-(代码操作： def getTextSurface)
+(代码： def getTextSurface)
 
 5.字体模块：pygame.font
 
 6.图像：pygame.Surface.blit 将一个图像绘制到另一个上方
+
+#### 五.加载我方坦克
+
+7.图像传输模块：pygame.image
+
+(代码：class Tank：init，display)
+
+8.用于存储直角坐标的pygame对象：pygame.rect
+
+#### 六.我方坦克移动及转向
+
+（代码：def move）
