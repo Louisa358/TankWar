@@ -1,5 +1,7 @@
 # TankWar
 
+[TO]
+
 #### 一、初始化类
 
 <img src="./assets/image-20221119141713624.png" alt="image-20221119141713624" style="zoom:50%;" />
@@ -48,7 +50,7 @@ import pygame
 
 1.主窗口显示：pygame.display (set_mode设置screen，fill填充颜色)
 
-
+（代码操作：def start_game）
 
 #### 三.事件处理
 
@@ -60,3 +62,12 @@ import pygame
 
 4.关闭游戏：event.type == pygame.QUIT
 
+（代码操作：def getEvent)
+
+#### 四.界面内文字提示
+
+(代码操作： def getTextSurface)
+
+5.字体模块：pygame.font
+
+6.图像：pygame.Surface.blit 将一个图像绘制到另一个上方
