@@ -56,8 +56,11 @@ class MainGame:
 
     def blit_my_bullet(self):
         for myBullet in self.myBulletList:
-            myBullet.display_bullet()
-            myBullet.move()
+            if myBullet.live:
+                myBullet.display_bullet()
+                myBullet.move()
+            else:
+                self.myBulletList.remove(myBullet)
 
     def end_game(self):
         print('Thanks')
@@ -88,8 +91,9 @@ class MainGame:
                     self.my_tank.direction = 'D'
                     self.my_tank.stop = False
                 elif event.key == pygame.K_SPACE:
-                    myBullet = Bullet(self.my_tank,self.window)
-                    self.myBulletList.append(myBullet)
+                    if len(self.myBulletList)<3:
+                        myBullet = Bullet(self.my_tank,self.window)
+                        self.myBulletList.append(myBullet)
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
