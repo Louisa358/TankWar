@@ -17,6 +17,7 @@ class MainGame:
     enemyTankList = []
     enemyTankCount = 5
     myBulletList = []
+    enemyBulletList = []
     def __init__(self):
         pass
 
@@ -36,6 +37,7 @@ class MainGame:
             self.my_tank.displayTank()
             self.blit_enemy_tank()
             self.blit_my_bullet()
+            self.blit_enemy_bullet()
             if not self.my_tank.stop:
                 self.my_tank.move()
             pygame.display.update()
@@ -53,6 +55,9 @@ class MainGame:
             enemyTank.displayTank()
             enemyTank.move()
             enemyTank.rand_move()
+            enemyBullet = enemyTank.shoot()
+            if enemyBullet:
+                self.enemyBulletList.append(enemyBullet)
 
     def blit_my_bullet(self):
         for myBullet in self.myBulletList:
@@ -61,6 +66,16 @@ class MainGame:
                 myBullet.move()
             else:
                 self.myBulletList.remove(myBullet)
+
+    def blit_enemy_bullet(self):
+        for enemyBullet in self.enemyBulletList:
+            if enemyBullet.live:
+                enemyBullet.display_bullet()
+                enemyBullet.move()
+                # enemyBullet.enemyBullet_hit_myTank()
+                # enemyBullet.hitWall()
+            else:
+                self.enemyBulletList.remove(enemyBullet)
 
     def end_game(self):
         print('Thanks')

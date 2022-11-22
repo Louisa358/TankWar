@@ -1,6 +1,7 @@
 import pygame.image
 from Tank import Tank
 import random
+from Bullet import Bullet
 
 
 class EnemyTank(Tank):
@@ -53,3 +54,9 @@ class EnemyTank(Tank):
         else:
             self.move()
             self.step -= 1
+
+    def shoot(self):
+        # 随机生成100以内的数
+        num = random.randint(1, 100)
+        if num < 10:
+            return Bullet(self,self.windows)

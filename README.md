@@ -134,5 +134,5 @@ import time模块，使用time.sleep来使坦克移速慢一点
 
 #### 十二.敌方发射子弹
 
-
+代码：def blit_enemy_bullet
 
