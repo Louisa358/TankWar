@@ -110,7 +110,11 @@ import time模块，使用time.sleep来使坦克移速慢一点
 
 根据随机生成数（1-4）来决定方向，从而获取相应的图片
 
-在maingame模块中定义两个类变量存储敌方坦克列表和数量，在maingame中定义一个方法 def createEnemyTank()
+在maingame模块中定义两个类变量存储敌方坦克列表和数量，在maingame中定义一个方法 def createEnemyTank(), 循环生成敌方坦克，定义方法def blitEnemyTank 通过遍历敌方坦克列表循环展示敌方坦克
+
+
+
+
 
 
 

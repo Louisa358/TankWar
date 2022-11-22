@@ -4,7 +4,6 @@ import pygame
 from Tank import Tank
 from EnemyTank import EnemyTank
 
-
 SCREEN_WIDTH = 700
 SCREEN_HEIGHT = 500
 BG_COLOR = pygame.Color(0, 0, 0)
@@ -26,6 +25,7 @@ class MainGame:
         self.window = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         pygame.display.set_caption('Tank War')
         self.my_tank = Tank(300, 250, self.window)
+        self.createEnemyTank()
 
         while True:
             self.window.fill(BG_COLOR)
@@ -40,14 +40,14 @@ class MainGame:
     def createEnemyTank(self):
         top = 100
         for i in range(self.enemyTankCount):
-            left = random.randint(0,600)
-            speed = random.randint(1,4)
-            enemy = EnemyTank(left,top,speed)
+            left = random.randint(0, 600)
+            speed = random.randint(1, 4)
+            enemy = EnemyTank(left, top, speed, self.window)
             self.enemyTankList.append(enemy)
 
     def blitEnemyTank(self):
         for enemyTank in self.enemyTankList:
-             enemyTank.displayTank()
+            enemyTank.display_tank()
 
     def end_game(self):
         print('Thanks')
@@ -83,7 +83,6 @@ class MainGame:
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                     self.my_tank.stop = True
-
 
 
 if __name__ == '__main__':
