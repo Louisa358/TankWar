@@ -37,6 +37,6 @@ class Tank:
     def shoot(self):
         pass
 
-    def display_tank(self):
+    def displayTank(self):
         self.image = self.images[self.direction]
         self.windows.blit(self.image, self.rect)

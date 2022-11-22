@@ -11,7 +11,7 @@ class EnemyTank(Tank):
             'EL': pygame.image.load('images/ET-L.png'),
             'ER': pygame.image.load('images/ET-R.png'),
         }
-        self.direction = self.randDirection()
+        self.direction = self.rand_direction()
         self.image = self.images[self.direction]
         self.rect = self.image.get_rect()
         self.rect.left = left
@@ -19,8 +19,9 @@ class EnemyTank(Tank):
         self.speed = speed
         self.flag = True
         self.windows = windows
+        self.step = 20
 
-    def randDirection(self):
+    def rand_direction(self):
         num = random.randint(1, 4)
         if num == 1:
             return 'EU'
@@ -30,3 +31,25 @@ class EnemyTank(Tank):
             return 'EL'
         elif num == 4:
             return 'ER'
+
+    def move(self):
+        if self.direction == 'EL':
+            if self.rect.left > 0:
+                self.rect.left -= self.speed
+        elif self.direction == 'EU':
+            if self.rect.top > 0:
+                self.rect.top -= self.speed
+        elif self.direction == 'ER':
+            if self.rect.left + self.rect.height < self.windows.get_width():
+                self.rect.left += self.speed
+        elif self.direction == 'ED':
+            if self.rect.top + self.rect.height < self.windows.get_height():
+                self.rect.top += self.speed
+
+    def rand_move(self):
+        if self.step <= 0:
+            self.direction = self.rand_direction()
+            self.step = 60
+        else:
+            self.move()
+            self.step -= 1

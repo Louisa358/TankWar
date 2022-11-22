@@ -25,19 +25,20 @@ class MainGame:
         self.window = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         pygame.display.set_caption('Tank War')
         self.my_tank = Tank(300, 250, self.window)
-        self.createEnemyTank()
+        self.create_enemy_tank()
 
         while True:
+            time.sleep(0.02)
             self.window.fill(BG_COLOR)
             self.getEvent()
-            self.window.blit(self.getTextSurface('Enemy Tank left: %d' % 6), (10, 10))
-            self.my_tank.display_tank()
-            self.blitEnemyTank()
+            self.window.blit(self.get_text_surface('Enemy Tank left: %d' % len(self.enemyTankList)), (10, 10))
+            self.my_tank.displayTank()
+            self.blit_enemy_tank()
             if not self.my_tank.stop:
                 self.my_tank.move()
             pygame.display.update()
 
-    def createEnemyTank(self):
+    def create_enemy_tank(self):
         top = 100
         for i in range(self.enemyTankCount):
             left = random.randint(0, 600)
@@ -45,15 +46,17 @@ class MainGame:
             enemy = EnemyTank(left, top, speed, self.window)
             self.enemyTankList.append(enemy)
 
-    def blitEnemyTank(self):
+    def blit_enemy_tank(self):
         for enemyTank in self.enemyTankList:
-            enemyTank.display_tank()
+            enemyTank.displayTank()
+            enemyTank.move()
+            enemyTank.rand_move()
 
     def end_game(self):
         print('Thanks')
         exit()
 
-    def getTextSurface(self, text):
+    def get_text_surface(self, text):
         pygame.font.init()
         font = pygame.font.SysFont('gadugi', 18)
         textSurface = font.render(text, True, TEXT_COLOR)
