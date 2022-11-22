@@ -88,7 +88,6 @@ class MainGame:
                     self.my_tank.direction = 'D'
                     self.my_tank.stop = False
                 elif event.key == pygame.K_SPACE:
-                    print('shoot')
                     myBullet = Bullet(self.my_tank,self.window)
                     self.myBulletList.append(myBullet)
 
