@@ -3,6 +3,7 @@ import time
 import pygame
 from Tank import Tank
 from EnemyTank import EnemyTank
+from Bullet import  Bullet
 
 SCREEN_WIDTH = 700
 SCREEN_HEIGHT = 500
@@ -15,7 +16,7 @@ class MainGame:
     my_tank = None
     enemyTankList = []
     enemyTankCount = 5
-
+    myBulletList = []
     def __init__(self):
         pass
 
@@ -34,6 +35,7 @@ class MainGame:
             self.window.blit(self.get_text_surface('Enemy Tank left: %d' % len(self.enemyTankList)), (10, 10))
             self.my_tank.displayTank()
             self.blit_enemy_tank()
+            self.blit_my_bullet()
             if not self.my_tank.stop:
                 self.my_tank.move()
             pygame.display.update()
@@ -51,6 +53,11 @@ class MainGame:
             enemyTank.displayTank()
             enemyTank.move()
             enemyTank.rand_move()
+
+    def blit_my_bullet(self):
+        for myBullet in self.myBulletList:
+            myBullet.display_bullet()
+            myBullet.move()
 
     def end_game(self):
         print('Thanks')
@@ -82,6 +89,8 @@ class MainGame:
                     self.my_tank.stop = False
                 elif event.key == pygame.K_SPACE:
                     print('shoot')
+                    myBullet = Bullet(self.my_tank,self.window)
+                    self.myBulletList.append(myBullet)
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:

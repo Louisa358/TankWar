@@ -16,7 +16,7 @@ class Tank:
         self.rect = self.image.get_rect()
         self.rect.left = left
         self.rect.top = top
-        self.speed = 1
+        self.speed = 6
         self.stop = True
         self.windows = windows
 

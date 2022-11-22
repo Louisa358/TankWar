@@ -120,6 +120,14 @@ import time模块，使用time.sleep来使坦克移速慢一点
 
 增加step变量来修改坦克移动方向（Class EnemyTank def randMove）
 
+#### 十.子弹类初始化
+
+代码：class Bullet 
+
+针对不同方向，使用坦克和子弹高度宽度计算在各个方向子弹可活动边界值
+
+#### 十一.发射子弹
+
 
 
 
