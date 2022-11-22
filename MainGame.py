@@ -1,6 +1,9 @@
+import random
+import time
 import pygame
 from Tank import Tank
-import time
+from EnemyTank import EnemyTank
+
 
 SCREEN_WIDTH = 700
 SCREEN_HEIGHT = 500
@@ -11,6 +14,8 @@ TEXT_COLOR = pygame.Color(255, 0, 0)
 class MainGame:
     window = None
     my_tank = None
+    enemyTankList = []
+    enemyTankCount = 5
 
     def __init__(self):
         pass
@@ -21,14 +26,28 @@ class MainGame:
         self.window = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         pygame.display.set_caption('Tank War')
         self.my_tank = Tank(300, 250, self.window)
+
         while True:
             self.window.fill(BG_COLOR)
             self.getEvent()
             self.window.blit(self.getTextSurface('Enemy Tank left: %d' % 6), (10, 10))
             self.my_tank.display_tank()
+            self.blitEnemyTank()
             if not self.my_tank.stop:
                 self.my_tank.move()
             pygame.display.update()
+
+    def createEnemyTank(self):
+        top = 100
+        for i in range(self.enemyTankCount):
+            left = random.randint(0,600)
+            speed = random.randint(1,4)
+            enemy = EnemyTank(left,top,speed)
+            self.enemyTankList.append(enemy)
+
+    def blitEnemyTank(self):
+        for enemyTank in self.enemyTankList:
+             enemyTank.displayTank()
 
     def end_game(self):
         print('Thanks')

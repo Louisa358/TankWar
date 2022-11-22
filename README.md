@@ -78,6 +78,8 @@ import pygame
 
 (代码：class Tank：init，display)
 
+使用字典存坦克四个方向的照片 pygame.image.load(文件名)
+
 8.用于存储直角坐标的pygame对象：pygame.rect
 
 #### 六.我方坦克移动及转向
@@ -88,6 +90,8 @@ import pygame
 
 #### 七.使坦克在按下键时持续移动
 
+(代码：def getevent)
+
 key_up,key_down键来开始和停止坦克移动
 
 添加新属性 stop作为坦克移动开关，控制转向后可以继续移动
@@ -95,3 +99,18 @@ key_up,key_down键来开始和停止坦克移动
 import time模块，使用time.sleep来使坦克移速慢一点
 
 注意：上下左右方向键会影响坦克移动，但是空格键（发射子弹）和移动键应该可以同时
+
+#### 八.加载敌方坦克
+
+(class EnemyTank，初始化加载坦克图片)
+
+敌方坦克特点： 数量为多个，游戏开始时敌方坦克位置及方向具有随机性
+
+（代码：import random --- def randDirection 用于生成初始随机坦克方向)
+
+根据随机生成数（1-4）来决定方向，从而获取相应的图片
+
+在maingame模块中定义两个类变量存储敌方坦克列表和数量，在maingame中定义一个方法 def createEnemyTank()
+
+
+
