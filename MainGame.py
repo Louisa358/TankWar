@@ -26,6 +26,7 @@ class MainGame:
         time.sleep(0.02)
         pygame.display.init()
         self.window = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+        self.create_my_tank()
         pygame.display.set_caption('Tank War')
         self.my_tank = Tank(300, 250, self.window)
         self.create_enemy_tank()
@@ -51,6 +52,10 @@ class MainGame:
                     # self.my_tank.mytank_hit_enemytank()
 
             pygame.display.update()
+
+    def create_my_tank(self):
+        self.my_tank = Tank(300, 250, self.window)
+
 
     def create_enemy_tank(self):
         top = 100
@@ -132,7 +137,7 @@ class MainGame:
             if event.type == pygame.KEYDOWN:
                 if not self.my_tank:
                     if event.key == pygame.K_ESCAPE:
-                        self.createMyTank()
+                        self.create_my_tank()
                 if self.my_tank and self.my_tank.live:
                     if event.key == pygame.K_LEFT:
                         self.my_tank.direction = 'L'
