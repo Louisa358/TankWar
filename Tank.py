@@ -1,7 +1,8 @@
 import pygame
+from BaseItem import BaseItem
 
 
-class Tank:
+class Tank(BaseItem):
     windows = None
 
     def __init__(self, left, top, windows):
@@ -18,6 +19,7 @@ class Tank:
         self.rect.top = top
         self.speed = 6
         self.stop = True
+        self.live = True
         self.windows = windows
 
     def move(self):

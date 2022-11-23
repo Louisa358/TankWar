@@ -6,6 +6,7 @@ from Bullet import Bullet
 
 class EnemyTank(Tank):
     def __init__(self, left, top, speed, windows):
+        super(EnemyTank, self).__init__(left, top, windows)
         self.images = {
             'U': pygame.image.load('images/ET-U.png'),
             'D': pygame.image.load('images/ET-D.png'),
@@ -21,6 +22,7 @@ class EnemyTank(Tank):
         self.flag = True
         self.windows = windows
         self.step = 20
+        self.live = True
 
     def rand_direction(self):
         num = random.randint(1, 4)
@@ -59,4 +61,4 @@ class EnemyTank(Tank):
         # 随机生成100以内的数
         num = random.randint(1, 100)
         if num < 10:
-            return Bullet(self,self.windows)
+            return Bullet(self, self.windows)

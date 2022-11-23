@@ -136,3 +136,16 @@ import time模块，使用time.sleep来使坦克移速慢一点
 
 代码：def blit_enemy_bullet
 
+#### 十三.我方子弹与敌方坦克碰撞
+
+方法：精灵类：sprite类
+
+定义一个基类 class BaseItem（Sprite）
+
+定义方法：def mybullet_hit_enemy
+
+```
+在EnemyTank中定义super(EnemyTank,self).__init__(left,top,windows)
+```
+
+#### 十四.爆炸类

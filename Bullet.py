@@ -1,8 +1,11 @@
 import pygame.image
 
+from BaseItem import BaseItem
 
-class Bullet:
+
+class Bullet(BaseItem):
     window = None
+
     def __init__(self,tank,window):
         self.window = window
         self.images = {
@@ -56,5 +59,6 @@ class Bullet:
                 self.live = False
 
     def display_bullet(self):
-        self.window.blit(self.image,self.rect)
+        self.window.blit(self.image, self.rect)
+
 

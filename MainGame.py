@@ -1,9 +1,11 @@
 import random
 import time
 import pygame
-from Tank import Tank
+from pygame.sprite import Sprite
+from Bullet import Bullet
 from EnemyTank import EnemyTank
-from Bullet import  Bullet
+from Explode import Explode
+from Tank import Tank
 
 SCREEN_WIDTH = 700
 SCREEN_HEIGHT = 500
@@ -18,8 +20,7 @@ class MainGame:
     enemyTankCount = 5
     myBulletList = []
     enemyBulletList = []
-    def __init__(self):
-        pass
+    explodeList = []
 
     def start_game(self):
         time.sleep(0.02)
@@ -38,6 +39,7 @@ class MainGame:
             self.blit_enemy_tank()
             self.blit_my_bullet()
             self.blit_enemy_bullet()
+            self.blit_explode()
             if not self.my_tank.stop:
                 self.my_tank.move()
             pygame.display.update()
@@ -52,18 +54,21 @@ class MainGame:
 
     def blit_enemy_tank(self):
         for enemyTank in self.enemyTankList:
-            enemyTank.displayTank()
-            enemyTank.move()
-            enemyTank.rand_move()
-            enemyBullet = enemyTank.shoot()
-            if enemyBullet:
-                self.enemyBulletList.append(enemyBullet)
+            if enemyTank.live:
+                enemyTank.displayTank()
+                enemyTank.rand_move()
+                enemyBullet = enemyTank.shoot()
+                if enemyBullet:
+                    self.enemyBulletList.append(enemyBullet)
+            else:
+                self.enemyTankList.remove(enemyTank)
 
     def blit_my_bullet(self):
         for myBullet in self.myBulletList:
             if myBullet.live:
                 myBullet.display_bullet()
                 myBullet.move()
+                self.mybullet_hit_enemytank(myBullet)
             else:
                 self.myBulletList.remove(myBullet)
 
@@ -76,6 +81,21 @@ class MainGame:
                 # enemyBullet.hitWall()
             else:
                 self.enemyBulletList.remove(enemyBullet)
+
+    def blit_explode(self):
+        for explode in self.explodeList:
+            if explode.live:
+                explode.display_explode()
+            else:
+                self.explodeList.remove(explode)
+
+    def mybullet_hit_enemytank(self, myBullet):
+        for enemytank in self.enemyTankList:
+            if pygame.sprite.collide_rect(enemytank, myBullet):
+                enemytank.live = False
+                myBullet.live = False
+                explode = Explode(enemytank,self.window)
+                self.explodeList.append(explode)
 
     def end_game(self):
         print('Thanks')
@@ -106,8 +126,8 @@ class MainGame:
                     self.my_tank.direction = 'D'
                     self.my_tank.stop = False
                 elif event.key == pygame.K_SPACE:
-                    if len(self.myBulletList)<3:
-                        myBullet = Bullet(self.my_tank,self.window)
+                    if len(self.myBulletList) < 3:
+                        myBullet = Bullet(self.my_tank, self.window)
                         self.myBulletList.append(myBullet)
 
             if event.type == pygame.KEYUP:
