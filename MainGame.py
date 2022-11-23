@@ -35,13 +35,21 @@ class MainGame:
             self.window.fill(BG_COLOR)
             self.getEvent()
             self.window.blit(self.get_text_surface('Enemy Tank left: %d' % len(self.enemyTankList)), (10, 10))
-            self.my_tank.displayTank()
+            if self.my_tank and self.my_tank.live:
+                self.my_tank.displayTank()
+            else:
+                del self.my_tank
+                self.my_tank = None
             self.blit_enemy_tank()
             self.blit_my_bullet()
             self.blit_enemy_bullet()
             self.blit_explode()
-            if not self.my_tank.stop:
-                self.my_tank.move()
+            if self.my_tank and self.my_tank.live:
+                if not self.my_tank.stop:
+                    self.my_tank.move()
+                    # MainGame.my_tank.hitWall()
+                    # self.my_tank.mytank_hit_enemytank()
+
             pygame.display.update()
 
     def create_enemy_tank(self):
@@ -77,7 +85,7 @@ class MainGame:
             if enemyBullet.live:
                 enemyBullet.display_bullet()
                 enemyBullet.move()
-                # enemyBullet.enemyBullet_hit_myTank()
+                self.enemybullet_hit_mytank(enemyBullet)
                 # enemyBullet.hitWall()
             else:
                 self.enemyBulletList.remove(enemyBullet)
@@ -97,6 +105,15 @@ class MainGame:
                 explode = Explode(enemytank,self.window)
                 self.explodeList.append(explode)
 
+    def enemybullet_hit_mytank(self,enemybullet):
+        if self.my_tank and self.my_tank.live:
+            if pygame.sprite.collide_rect(self.my_tank,enemybullet):
+                explode = Explode(self.my_tank,self.window)
+                self.explodeList.append(explode)
+                enemybullet.live = False
+                self.my_tank.live = False
+
+
     def end_game(self):
         print('Thanks')
         exit()
@@ -113,27 +130,31 @@ class MainGame:
             if event.type == pygame.QUIT:
                 self.end_game()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    self.my_tank.direction = 'L'
-                    self.my_tank.stop = False
-                elif event.key == pygame.K_RIGHT:
-                    self.my_tank.direction = 'R'
-                    self.my_tank.stop = False
-                elif event.key == pygame.K_UP:
-                    self.my_tank.direction = 'U'
-                    self.my_tank.stop = False
-                elif event.key == pygame.K_DOWN:
-                    self.my_tank.direction = 'D'
-                    self.my_tank.stop = False
-                elif event.key == pygame.K_SPACE:
-                    if len(self.myBulletList) < 3:
-                        myBullet = Bullet(self.my_tank, self.window)
-                        self.myBulletList.append(myBullet)
+                if not self.my_tank:
+                    if event.key == pygame.K_ESCAPE:
+                        self.createMyTank()
+                if self.my_tank and self.my_tank.live:
+                    if event.key == pygame.K_LEFT:
+                        self.my_tank.direction = 'L'
+                        self.my_tank.stop = False
+                    elif event.key == pygame.K_RIGHT:
+                        self.my_tank.direction = 'R'
+                        self.my_tank.stop = False
+                    elif event.key == pygame.K_UP:
+                        self.my_tank.direction = 'U'
+                        self.my_tank.stop = False
+                    elif event.key == pygame.K_DOWN:
+                        self.my_tank.direction = 'D'
+                        self.my_tank.stop = False
+                    elif event.key == pygame.K_SPACE:
+                        if len(self.myBulletList) < 3:
+                            myBullet = Bullet(self.my_tank, self.window)
+                            self.myBulletList.append(myBullet)
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
-                    self.my_tank.stop = True
-
+                    if self.my_tank and self.my_tank.live:
+                        self.my_tank.stop = True
 
 if __name__ == '__main__':
     MainGame().start_game()
