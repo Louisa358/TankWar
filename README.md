@@ -149,3 +149,22 @@ import time模块，使用time.sleep来使坦克移速慢一点
 ```
 
 #### 十四.爆炸类
+
+class explode
+
+#### 十五.敌方子弹与我方坦克碰撞
+
+def enemybullet_hit_mytank
+
+#### 十六.坦克无限重生
+
+创建我方坦克方法：def create_mytank()
+
+#### 十七.墙壁类
+
+ class wall
+
+注意点：1.坦克和墙壁不应该有重合位置，子弹无法穿墙 （def hit__wall）,使用精灵类collide进行检测  2.坦克被撞击生命值应该下降
+
+
+

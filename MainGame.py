@@ -6,6 +6,7 @@ from Bullet import Bullet
 from EnemyTank import EnemyTank
 from Explode import Explode
 from Tank import Tank
+from Wall import Wall
 
 SCREEN_WIDTH = 700
 SCREEN_HEIGHT = 500
@@ -20,7 +21,9 @@ class MainGame:
     enemyTankCount = 5
     myBulletList = []
     enemyBulletList = []
+    bullets = myBulletList + enemyBulletList
     explodeList = []
+    wallList = []
 
     def start_game(self):
         time.sleep(0.02)
@@ -30,6 +33,7 @@ class MainGame:
         pygame.display.set_caption('Tank War')
         self.my_tank = Tank(300, 250, self.window)
         self.create_enemy_tank()
+        self.create_wall()
 
         while True:
             time.sleep(0.02)
@@ -45,6 +49,7 @@ class MainGame:
             self.blit_my_bullet()
             self.blit_enemy_bullet()
             self.blit_explode()
+            self.blit_wall()
             if self.my_tank and self.my_tank.live:
                 if not self.my_tank.stop:
                     self.my_tank.move()
@@ -52,6 +57,18 @@ class MainGame:
                     # self.my_tank.mytank_hit_enemytank()
 
             pygame.display.update()
+
+    def blit_wall(self):
+        for wall in self.wallList:
+            if wall.live:
+                wall.displayWall()
+            else:
+                self.wallList.remove(wall)
+
+    def create_wall(self):
+        for i in range(6):
+            wall = Wall(i*130,220,self.window)
+            self.wallList.append(wall)
 
     def create_my_tank(self):
         self.my_tank = Tank(300, 250, self.window)
@@ -62,7 +79,7 @@ class MainGame:
         for i in range(self.enemyTankCount):
             left = random.randint(0, 600)
             speed = random.randint(1, 4)
-            enemy = EnemyTank(left, top, speed, self.window)
+            enemy = EnemyTank(left, top, speed, self.window, self.wallList)
             self.enemyTankList.append(enemy)
 
     def blit_enemy_tank(self):
@@ -82,6 +99,7 @@ class MainGame:
                 myBullet.display_bullet()
                 myBullet.move()
                 self.mybullet_hit_enemytank(myBullet)
+                myBullet.hit_wall()
             else:
                 self.myBulletList.remove(myBullet)
 
@@ -91,7 +109,7 @@ class MainGame:
                 enemyBullet.display_bullet()
                 enemyBullet.move()
                 self.enemybullet_hit_mytank(enemyBullet)
-                # enemyBullet.hitWall()
+                enemyBullet.hit_wall()
             else:
                 self.enemyBulletList.remove(enemyBullet)
 
@@ -117,7 +135,6 @@ class MainGame:
                 self.explodeList.append(explode)
                 enemybullet.live = False
                 self.my_tank.live = False
-
 
     def end_game(self):
         print('Thanks')
@@ -153,7 +170,7 @@ class MainGame:
                         self.my_tank.stop = False
                     elif event.key == pygame.K_SPACE:
                         if len(self.myBulletList) < 3:
-                            myBullet = Bullet(self.my_tank, self.window)
+                            myBullet = Bullet(self.my_tank, self.window, self.wallList)
                             self.myBulletList.append(myBullet)
 
             if event.type == pygame.KEYUP:

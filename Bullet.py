@@ -6,7 +6,7 @@ from BaseItem import BaseItem
 class Bullet(BaseItem):
     window = None
 
-    def __init__(self,tank,window):
+    def __init__(self,tank,window, wallList):
         self.window = window
         self.images = {
             'U': pygame.image.load('images/bulletU.png'),
@@ -33,6 +33,7 @@ class Bullet(BaseItem):
         self.speed = 6
         # 子弹的状态是否碰到墙壁，碰到墙壁修改此状态
         self.live = True
+        self.wallList = wallList
 
     def move(self):
         if self.direction == 'U':
@@ -60,5 +61,14 @@ class Bullet(BaseItem):
 
     def display_bullet(self):
         self.window.blit(self.image, self.rect)
+
+    def hit_wall(self):
+        #循环遍历墙壁列表
+        for wall in self.wallList:
+            if pygame.sprite.collide_rect(self, wall):
+                self.live = False
+                wall.hp -= 1
+                if wall.hp<=0:
+                    wall.live = False
 
 
