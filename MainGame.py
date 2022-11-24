@@ -8,7 +8,7 @@ from Explode import Explode
 from Tank import Tank
 from Wall import Wall
 
-SCREEN_WIDTH = 700
+SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 500
 BG_COLOR = pygame.Color(0, 0, 0)
 TEXT_COLOR = pygame.Color(255, 0, 0)
@@ -31,7 +31,7 @@ class MainGame:
         self.window = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         self.create_my_tank()
         pygame.display.set_caption('Tank War')
-        self.my_tank = Tank(300, 250, self.window)
+        self.my_tank = Tank(300, 250, self.window,self.wallList)
         self.create_enemy_tank()
         self.create_wall()
 
@@ -53,7 +53,7 @@ class MainGame:
             if self.my_tank and self.my_tank.live:
                 if not self.my_tank.stop:
                     self.my_tank.move()
-                    # MainGame.my_tank.hitWall()
+                    self.my_tank.hitWall(self.wallList)
                     # self.my_tank.mytank_hit_enemytank()
 
             pygame.display.update()
@@ -71,7 +71,7 @@ class MainGame:
             self.wallList.append(wall)
 
     def create_my_tank(self):
-        self.my_tank = Tank(300, 250, self.window)
+        self.my_tank = Tank(300, 250, self.window,self.wallList)
 
 
     def create_enemy_tank(self):
@@ -88,6 +88,7 @@ class MainGame:
                 enemyTank.displayTank()
                 enemyTank.rand_move()
                 enemyBullet = enemyTank.shoot()
+                enemyTank.hitWall(self.wallList)
                 if enemyBullet:
                     self.enemyBulletList.append(enemyBullet)
             else:

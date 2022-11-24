@@ -4,8 +4,9 @@ from BaseItem import BaseItem
 
 class Tank(BaseItem):
     windows = None
+    wallList = None
 
-    def __init__(self, left, top, windows):
+    def __init__(self, left, top, windows,wallList):
         self.images = {
             'U': pygame.image.load('images/MT-U.png'),
             'D': pygame.image.load('images/MT-D.png'),
@@ -21,8 +22,13 @@ class Tank(BaseItem):
         self.stop = True
         self.live = True
         self.windows = windows
+        self.oldLeft = self.rect.left
+        self.oldTop = self.rect.top
 
     def move(self):
+        self.oldLeft = self.rect.left
+        self.oldTop = self.rect.top
+
         if self.direction == 'L':
             if self.rect.left > 0:
                 self.rect.left -= self.speed
@@ -38,6 +44,16 @@ class Tank(BaseItem):
 
     def shoot(self):
         pass
+
+    def stay(self):
+        self.rect.left = self.oldLeft
+        self.rect.top = self.oldTop
+
+    #检测坦克是否与墙壁发生碰撞
+    def hitWall(self,wallList):
+        for wall in wallList:
+            if pygame.sprite.collide_rect(self,wall):
+                self.stay()
 
     def displayTank(self):
         self.image = self.images[self.direction]

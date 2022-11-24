@@ -2,7 +2,6 @@ import pygame.image
 
 from BaseItem import BaseItem
 
-
 class Bullet(BaseItem):
     window = None
 

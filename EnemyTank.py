@@ -6,7 +6,7 @@ from Bullet import Bullet
 
 class EnemyTank(Tank):
     def __init__(self, left, top, speed, windows, wallList):
-        super(EnemyTank, self).__init__(left, top, windows)
+        super(EnemyTank, self).__init__(left, top, windows,wallList)
         self.images = {
             'U': pygame.image.load('images/ET-U.png'),
             'D': pygame.image.load('images/ET-D.png'),
