@@ -4,9 +4,8 @@ from BaseItem import BaseItem
 
 class Tank(BaseItem):
     windows = None
-    wallList = None
 
-    def __init__(self, left, top, windows,wallList):
+    def __init__(self, left, top, windows):
         self.images = {
             'U': pygame.image.load('images/MT-U.png'),
             'D': pygame.image.load('images/MT-D.png'),
@@ -41,9 +40,6 @@ class Tank(BaseItem):
         elif self.direction == 'D':
             if self.rect.top + self.rect.height < self.windows.get_height():
                 self.rect.top += self.speed
-
-    def shoot(self):
-        pass
 
     def stay(self):
         self.rect.left = self.oldLeft

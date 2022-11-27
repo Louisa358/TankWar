@@ -19,7 +19,7 @@ class Explode:
         if self.step < len(self.images):
             self.image = self.images[self.step]
             self.step += 1
-            self.window.blit(self.image,self.rect)
+            self.window.blit(self.image, self.rect)
         else:
             self.live = False
             self.step = 0

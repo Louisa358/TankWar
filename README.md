@@ -1,10 +1,10 @@
 # TankWar
 
-[TO]
+[TOC]
 
 #### 一、初始化类
 
-<img src="./assets/image-20221119141713624.png" alt="image-20221119141713624" style="zoom:50%;" />
+![image-20221127194311586](./assets/image-20221127194311586.png)
 
 ###### 坦克类：敌我坦克
 

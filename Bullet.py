@@ -68,6 +68,6 @@ class Bullet(BaseItem):
                 self.live = False
                 wall.hp -= 1
                 if wall.hp<=0:
-                    wall.live = False
+                    self.wallList.remove(wall)
 
 

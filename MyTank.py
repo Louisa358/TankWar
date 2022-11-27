@@ -2,4 +2,4 @@ from Tank import Tank
 
 class MyTank(Tank):
     def __init__(self,left,top):
-        pass
+        super(MyTank,self).__init__(left,top)

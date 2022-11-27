@@ -1,7 +1,6 @@
 import random
 import time
 import pygame
-from pygame.sprite import Sprite
 from Bullet import Bullet
 from EnemyTank import EnemyTank
 from Explode import Explode
@@ -21,17 +20,14 @@ class MainGame:
     enemyTankCount = 5
     myBulletList = []
     enemyBulletList = []
-    bullets = myBulletList + enemyBulletList
     explodeList = []
     wallList = []
 
     def start_game(self):
-        time.sleep(0.02)
         pygame.display.init()
         self.window = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         self.create_my_tank()
         pygame.display.set_caption('Tank War')
-        self.my_tank = Tank(300, 250, self.window,self.wallList)
         self.create_enemy_tank()
         self.create_wall()
 
@@ -40,39 +36,33 @@ class MainGame:
             self.window.fill(BG_COLOR)
             self.getEvent()
             self.window.blit(self.get_text_surface('Enemy Tank left: %d' % len(self.enemyTankList)), (10, 10))
-            if self.my_tank and self.my_tank.live:
+            if self.my_tank:
                 self.my_tank.displayTank()
-            else:
-                del self.my_tank
-                self.my_tank = None
             self.blit_enemy_tank()
             self.blit_my_bullet()
             self.blit_enemy_bullet()
             self.blit_explode()
             self.blit_wall()
-            if self.my_tank and self.my_tank.live:
+            if self.my_tank:
                 if not self.my_tank.stop:
                     self.my_tank.move()
                     self.my_tank.hitWall(self.wallList)
-                    # self.my_tank.mytank_hit_enemytank()
+                    self.mytank_hit_enemytank()
 
             pygame.display.update()
 
     def blit_wall(self):
         for wall in self.wallList:
-            if wall.live:
-                wall.displayWall()
-            else:
-                self.wallList.remove(wall)
+            wall.displayWall()
+
 
     def create_wall(self):
         for i in range(6):
-            wall = Wall(i*130,220,self.window)
+            wall = Wall(i * 130, 220, self.window)
             self.wallList.append(wall)
 
     def create_my_tank(self):
-        self.my_tank = Tank(300, 250, self.window,self.wallList)
-
+        self.my_tank = Tank(300, 350, self.window)
 
     def create_enemy_tank(self):
         top = 100
@@ -89,6 +79,7 @@ class MainGame:
                 enemyTank.rand_move()
                 enemyBullet = enemyTank.shoot()
                 enemyTank.hitWall(self.wallList)
+                self.enemyTank_hit_myTank()
                 if enemyBullet:
                     self.enemyBulletList.append(enemyBullet)
             else:
@@ -114,6 +105,10 @@ class MainGame:
             else:
                 self.enemyBulletList.remove(enemyBullet)
 
+        if self.my_tank and not self.my_tank.live:
+            del self.my_tank
+            self.my_tank = None
+
     def blit_explode(self):
         for explode in self.explodeList:
             if explode.live:
@@ -122,20 +117,30 @@ class MainGame:
                 self.explodeList.remove(explode)
 
     def mybullet_hit_enemytank(self, myBullet):
-        for enemytank in self.enemyTankList:
-            if pygame.sprite.collide_rect(enemytank, myBullet):
-                enemytank.live = False
+        for enemyTank in self.enemyTankList:
+            if pygame.sprite.collide_rect(enemyTank, myBullet):
+                enemyTank.live = False
                 myBullet.live = False
-                explode = Explode(enemytank,self.window)
+                explode = Explode(enemyTank, self.window)
                 self.explodeList.append(explode)
 
-    def enemybullet_hit_mytank(self,enemybullet):
+    def enemybullet_hit_mytank(self, enemyBullet):
         if self.my_tank and self.my_tank.live:
-            if pygame.sprite.collide_rect(self.my_tank,enemybullet):
-                explode = Explode(self.my_tank,self.window)
+            if pygame.sprite.collide_rect(self.my_tank, enemyBullet):
+                explode = Explode(self.my_tank, self.window)
                 self.explodeList.append(explode)
-                enemybullet.live = False
+                enemyBullet.live = False
                 self.my_tank.live = False
+
+    def mytank_hit_enemytank(self):
+        for enemyTank in self.enemyTankList:
+            if pygame.sprite.collide_rect(self.my_tank, enemyTank):
+                self.my_tank.stay()
+
+    def enemyTank_hit_myTank(self):
+        for enemyTank in self.enemyTankList:
+            if self.my_tank and pygame.sprite.collide_rect(enemyTank, self.my_tank):
+                enemyTank.stay()
 
     def end_game(self):
         print('Thanks')
@@ -156,7 +161,7 @@ class MainGame:
                 if not self.my_tank:
                     if event.key == pygame.K_ESCAPE:
                         self.create_my_tank()
-                if self.my_tank and self.my_tank.live:
+                if self.my_tank:
                     if event.key == pygame.K_LEFT:
                         self.my_tank.direction = 'L'
                         self.my_tank.stop = False
@@ -176,8 +181,9 @@ class MainGame:
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
-                    if self.my_tank and self.my_tank.live:
+                    if self.my_tank:
                         self.my_tank.stop = True
+
 
 if __name__ == '__main__':
     MainGame().start_game()
